@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<body>
+<!--////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////
+AGENDA SERVICES BUILDER MASTER VERSION
+////////////////////////////////////////////////////////////////////////////-->
+<!--////////////////////////////////////////////////////////////////////////////-->
+
+
+<!--////////////////////////////////////////////////////////////////////////////
+MAIN INPUT TEXT BOX
+////////////////////////////////////////////////////////////////////////////-->
+<textarea style="overflow-y: scroll;height:400px; width:100%" placeholder="Paste Agenda Here" id="myTextarea000"></textarea>
+
+<div id="myTextarea0000" style="height: 400px; width: 100%;"></div>
+
+
+<div id="myTextarea0" style="height: 400px; width: 90%; position: absolute; right: 2.25%; top: 5%; border: 0.75px solid black; overflow: scroll; white-space: nowrap;"  contentEditable="true" onscroll="myFunction()">Paste Agenda Here
+</div>
+
+
+<div id="myTextarea00" style="height: 400px; width: 4.95%; position: absolute; left: 2.5%; top: 5%; border: 0.75px solid black; text-align: center; overflow: hidden;"> 1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79<br>80<br>81<br>82<br>83<br>84<br>85<br>86<br>87<br>88<br>89<br>90<br>91<br>92<br>93<br>94<br>95<br>96<br>97<br>98<br>99<br>100
+</div>
+
+
+
+<script>
+    var elmnt = document.getElementById("myTextarea00");
+    var elmnt2 = document.getElementById("myTextarea0");
+    
+    var x = 0;
+    function myFunction() {
+        elmnt.scrollTop = x = elmnt2.scrollTop;
+    }
+</script>
+
+<!--////////////////////////////////////////////////////////////////////////////
+CONFIGURATIONS
+////////////////////////////////////////////////////////////////////////////-->
+<!-- LIVE OPTIONS -->
+<form action="">
+    <input type="radio" name="live" value="Live" id="b5"> <a id=bb5>Live</a>
+    <input type="radio" name="live" value="Archive" id="b6"> <a id=bb6>Archive</a>
+</form>
+<!-- READ BUTTON -->
+<button type="button" onclick="read()">Read</button>
+<!-- NUMBER OF LINES COMBOBOX -->
+<select id="pick" name="pick" onChange="select()"></select>
+<!-- YOUTUBE LINK TEXT AREA -->
+<textarea rows="1" cols="25" placeholder="Enter Youtube Link Extension" id="myTextarea4"></textarea>
+<!-- OPTIONS CHECKBOXES -->
+<form action="">
+    <input type="checkbox" name="htmlStyle" value="Bold" id="b1"> Bold
+    <input type="checkbox" name="htmlStyle" value="Link" id="b2"> Link
+    <input type="checkbox" name="htmlStyle" value="Indent" id="b3"> Indent
+    <input type="checkbox" name="htmlStyle" value="None" id="b4"> None
+</form>
+<!-- TIMECODE TEXT AREA -->
+<textarea rows="1" cols="25" placeholder="Enter Time" id="myTextarea5"></textarea>
+<!-- ADD TO FILE BUTTON --><!-- calls delayed delete after 2 sec -->
+<button type="button" onclick="addToFile() ; setTimeout(delayDel, 2000)">Add</button>
+<!-- 'ADDED' NOTIFICATION TEXT -->
+<p id="check"></p>
+<!-- PDF URL TEXT AREA -->
+<textarea rows="1" cols="25" placeholder="Enter PDF url" id="myTextarea6"></textarea>
+<!-- CONVERT BUTTON -->
+<button type="button" onclick="convert()">Convert</button>
+
+
+
+
+
+<!--////////////////////////////////////////////////////////////////////////////
+OUTPUT TEXT BOX
+////////////////////////////////////////////////////////////////////////////-->
+<textarea style="overflow-y: scroll;height:400px; width:100%" placeholder="HTML Output" id="myTextarea1"></textarea>
+
+<!-- PREVIEW BUTTON -->
+<button type="button" onclick="show()">Preview</button>
+
+<!--////////////////////////////////////////////////////////////////////////////
+PREVIEW IFRAME
+////////////////////////////////////////////////////////////////////////////-->
+<iframe id="myTextarea3" height="500" width="100%"></iframe>
+
+<!--////////////////////////////////////////////////////////////////////////////
+VERSIONS TEXT
+////////////////////////////////////////////////////////////////////////////-->
+<p id="version">Version
+    <select id="selectVersion" name="selectVersion" onchange="switchVersion();">
+        <option value="1.2">1.2</option>
+        <option value="1.1">1.1</option>
+        <option value="1.0">1.0</option>
+    </select>
+</p>
+
+
+<!--////////////////////////////////////////////////////////////////////////////
+SCRIPTS
+////////////////////////////////////////////////////////////////////////////-->
+<script>
+////////////////////////////////////////////////////////////////////////////
+//VERSION SWITCHER
+//This feature allows you to utilize a previous version of the builder in
+//case of an emergency.
+////////////////////////////////////////////////////////////////////////////
+var x = document.getElementById('b5');
+x.style.display = 'none';
+var y = document.getElementById('bb5');
+y.style.display = 'none';
+var z = document.getElementById('b6');
+z.style.display = 'none';
+var a = document.getElementById('bb6');
+a.style.display = 'none';
+var b = document.getElementById('myTextarea0');
+b.style.display = 'none';
+var c = document.getElementById('myTextarea00');
+c.style.display = 'none';
+var d = document.getElementById('myTextarea000');
+d.style.display = 'none';
+var e = document.getElementById('myTextarea0000');
+e.style.display = 'none';
+
+switchVersion();
+
+var versionSel = document.getElementById("selectVersion");
+var selectedValue = versionSel.options[versionSel.selectedIndex].value;
+
+function switchVersion() {
+    var versionSel = document.getElementById("selectVersion");
+    var selectedValue = versionSel.options[versionSel.selectedIndex].value;
+    if (x.style.display === 'none' && selectedValue != "1.0") {
+        x.style.display = 'block';
+    }
+    if(selectedValue == "1.0") {
+        x.style.display = 'none';
+    }
+    if (y.style.display === 'none' && selectedValue != "1.0") {
+        y.style.display = 'block';
+    }
+    if(selectedValue == "1.0") {
+        y.style.display = 'none';
+    }
+    if (z.style.display === 'none' && selectedValue != "1.0") {
+        z.style.display = 'block';
+    }
+    if(selectedValue == "1.0") {
+        z.style.display = 'none';
+    }
+    if (a.style.display === 'none' && selectedValue != "1.0") {
+        a.style.display = 'block';
+    }
+    if(selectedValue == "1.0") {
+        a.style.display = 'none';
+    }
+    if (b.style.display === 'none' && selectedValue == "1.2") {
+        b.style.display = 'block';
+    } else {
+        b.style.display = 'none';
+    }
+    if (c.style.display === 'none' && selectedValue == "1.2") {
+        c.style.display = 'block';
+    } else {
+        c.style.display = 'none';
+    }
+    if (d.style.display === 'none' && (selectedValue == "1.1" || selectedValue == "1.0")) {
+        d.style.display = 'block';
+    }
+    if((selectedValue != "1.1" && selectedValue != "1.0")) {
+        d.style.display = 'none';
+    }
+    if (e.style.display === 'none' && selectedValue == "1.2") {
+        e.style.display = 'block';
+    } else {
+        e.style.display = 'none';
+    }
+    
+}
+
+////////////////////////////////////////////////////////////////////////////
+//VARIBLES
+////////////////////////////////////////////////////////////////////////////
+var output = "";
+var temp = "";
+var link = "";
+var video = "";
+var time = '';
+var formatTime = 1;
+var theRest = "";
+var scripts = "";
+var scrip = [];
+var links = "";
+var pdf = "";
+var tag = "";
+var check = "";
+var testStr = "";
+var out = [];
+var ts = 0;
+var styles = "";
+
+////////////////////////////////////////////////////////////////////////////
+//ADD TO FILE FUNCTION
+//This function first takes the time, youtube link, and pdf url and
+//creates variables. It then reads the timecode (00:00:00) and translates
+//it into seconds. Finally, it checks each button and combination thereof,
+//to decide what needs to be done. If Bold is checked, 'strong' is added.
+//If Link is checked, a script with timecode is added to the scrip array.
+//If Indent is checked, a 3em left margin is added. If None is checked,the
+//text is added with no modifications. It also triggers the 'Added' text.
+////////////////////////////////////////////////////////////////////////////
+function addToFile(){
+    time = document.getElementById("myTextarea5").value;
+    link = document.getElementById("myTextarea4").value;
+    pdf = document.getElementById("myTextarea6").value;
+    
+    if(time.indexOf(':')){
+        time = time.split(':');
+        if(time[2]){
+            formatTime = (Number(time[0])*60*60)+(Number(time[1])*60)+(Number(time[2]));
+        }
+        else{
+            formatTime = (Number(time[0])*60)+(Number(time[1]));
+        }
+    }
+////////////////////////////////////////////////////////////////////////////
+//Check for Bold checkbox
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b1").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<!--" + i + "-->" + "<p style=\"margin:0; margin-left:1em;\"><strong>" + lines[i-1] + "</strong><br>" ;
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Check for Link checkbox
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b2").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<!--" + i + "-->" + "<p style=\"margin:0; margin-left:1em;\" onclick=\"myFunction" + i + "()\"><font color=\"#18a3dc\">" + lines[i-1] + "</font><br>" ;
+            
+            scrip[i] = "\n<script>function myFunction" + i + "(){ \n document.getElementById(\"box\").innerHTML = '<iframe width=\"100%\"height=\"100%\" src=\"https://www.youtube.com/embed/" + link + "?start=" + formatTime + "&autoplay=1&controls=1&showinfo=0&modestbranding=0&playsinline=1\" frameborder=\"0\" allowfullscreen> </iframe>'; }\n </" +"script>";
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Check for Indent checkbox
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b3").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<!--" + i + "-->" + "<p style=\"margin:0; margin-left:3em\">" + lines[i-1] + "</p>";
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Check for Bold and Indent checkboxes
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b1").checked == true && document.getElementById("b3").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<!--" + i + "-->" + "<p style=\"margin:0; margin-left:3em;\"><strong>" + lines[i-1] + "</strong><br>" ;
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Check for Bold and Link checkboxes
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b1").checked == true && document.getElementById("b2").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<!--" + i + "-->" + "<p style=\"margin:0; margin-left:1em;\"><strong onclick=\"myFunction" + i + "()\"><font color=\"#18a3dc\">" + lines[i-1] + "</font></strong><br>" ;
+            
+            scrip[i] = "\n<script>function myFunction" + i + "(){ \n document.getElementById(\"box\").innerHTML = '<iframe width=\"100%\"height=\"100%\" src=\"https://www.youtube.com/embed/" + link + "?start=" + formatTime + "&autoplay=1&controls=1&showinfo=0&modestbranding=0&playsinline=1\" frameborder=\"0\" allowfullscreen> </iframe>'; }\n </" +"script>";
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Check for Link and Indent checkboxes
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b2").checked == true && document.getElementById("b3").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<!--" + i + "-->" + "<p style=\"margin:0; margin-left:3em; onclick=\"myFunction" + i + "()\"><font color=\"#18a3dc\">" + lines[i-1] + "</font><br>" ;
+            
+            scrip[i] = "\n<script>function myFunction" + i + "(){ \n document.getElementById(\"box\").innerHTML = '<iframe width=\"100%\"height=\"100%\" src=\"https://www.youtube.com/embed/" + link + "?start=" + formatTime + "&autoplay=1&controls=1&showinfo=0&modestbranding=0&playsinline=1\" frameborder=\"0\" allowfullscreen> </iframe>'; }\n </" +"script>";
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Check for Bold, Link, and Indent checkboxes
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b1").checked == true && document.getElementById("b2").checked == true && document.getElementById("b3").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<!--" + i + "-->" + "<p style=\"margin:0; margin-left:3em; \"><strong onclick=\"myFunction" + i + "()\"><font color=\"#18a3dc\">" + lines[i-1] + "</font></strong><br>" ;
+            
+            scrip[i] = "\n<script>function myFunction" + i + "(){ \n document.getElementById(\"box\").innerHTML = '<iframe width=\"100%\"height=\"100%\" src=\"https://www.youtube.com/embed/" + link + "?start=" + formatTime + "&autoplay=1&controls=1&showinfo=0&modestbranding=0&playsinline=1\" frameborder=\"0\" allowfullscreen> </iframe>'; }\n </" +"script>";
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Check for None checkbox
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b4").checked == true) {
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+        var lines = myTextarea0.innerText.split('\n');
+    }
+    for(var i = 1 ; i < lines.length ; i++){
+        if(document.getElementById("pick").value == i){
+            out[i] = "<p style=\"margin:0; margin-left:1em;\">" + "<!--" + i + "-->" + lines[i-1] + "</p>";
+            if(lines[(i-1)] == ""){
+                out[i] = "<br>";
+            }
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////
+//Allows 'Added' to appear if at least one of the checkboxes was checked
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b1").checked == true || document.getElementById("b2").checked == true || document.getElementById("b3").checked == true || document.getElementById("b4").checked == true) {
+    document.getElementById("check").innerHTML = "Added!";
+}
+}
+
+////////////////////////////////////////////////////////////////////////////
+//DELAY FUNCTION
+//This function simply removes the 'added' text after it has shown for a
+//few seconds.
+////////////////////////////////////////////////////////////////////////////
+function delayDel(){
+    document.getElementById("check").innerHTML = "";
+}
+
+////////////////////////////////////////////////////////////////////////////
+//CONVERT FUNCTION
+//This function parses the text in the main text area and builds the
+//output. It starts by giving each line a line number. If 'out[]' matches
+//the line number, the value from 'out[]' is placed there. If 'scrip[]'
+//matches a line number, a script is added to the output. The styling is
+//added to the bottom. Relevant variables are then cleared to be reused. 
+////////////////////////////////////////////////////////////////////////////
+function convert(){
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var lines = myTextarea0.value.split('\n');
+    }
+    else{
+            //lines = lines.replace(/–/g,"_");
+            //alert(lines);
+            lines = document.getElementById("myTextarea0").innerText.split('\n');
+        }
+        
+        for(var p = 1 ; p < lines.length ; p++){
+            if(out[p] == null){
+                out[p] = "<p style=\"margin:0; margin-left:1em;\">" + "<!--" + p + "-->" + lines[p-1] + "</p>";
+                if(lines[(p-1)] == ""){
+                    out[p] = "<br>";
+                } 
+            }
+            if(scrip[p] == null){
+                scrip[p] = "<!--" + p + "-->";
+            }
+        }
+        
+        if(selectedValue == "1.0"){
+            video = "<head><meta http-equiv=\"Content-Type\"content=\"text/html;charset=utf-8\" /></head><body style=\"background-color:lightgrey;\">\n<div id=\"title\"><img src=\"https://dl.dropboxusercontent.com/u/30879948/white.png\" style=\"width:100%; height:100%;\"></div>\n<div id=\"title0\"><img src=\"https://templecity.ec1c24.com/wp-content/uploads/2016/09/tcheader.png\" style=\"width:100%; height:100%;\"></div>\n<div id=\"box\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + link + "?controls=1&showinfo=0&modestbranding=0&playsinline=1\" frameborder=\"0\" allowfullscreen></iframe></div>\n<div id=\"box3\" style=\"background-color:white;\"><iframe id=\"pdf\" width=\"100%\" height=\"100%\"src=\"https://docs.google.com/viewer?url=" + pdf + "&embedded=true\"></iframe></div>\n<div id=\"box2\" style=\"overflow-y: scroll; background-color:white;\">\n";
+        }
+        if(selectedValue != "1.0"){
+            video = "<head><meta http-equiv=\"Content-Type\"content=\"text/html;charset=utf-8\" /><body style=\"background-color:lightgrey;\">\n<div id=\"title\"><img src=\"https://templecity.ec1c24.com/wp-content/uploads/2017/01/white.png\" style=\"width:100%; height:100%;\"></div>\n<div id=\"title0\"><img src=\"https://templecity.ec1c24.com/wp-content/uploads/2017/03/tcheader.png\" style=\"width:100%; height:100%;\"></div>\n<div id=\"box\"><iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + link + "?controls=1&showinfo=0&modestbranding=0&playsinline=1\" frameborder=\"0\" allowfullscreen></iframe></div>\n<div id=\"box3\" style=\"background-color:white;\"><iframe id=\"pdf\" width=\"100%\" height=\"100%\"src=\"https://docs.google.com/viewer?url=" + pdf + "&embedded=true\"></iframe></div>\n<div id=\"box2\" style=\"overflow-y: scroll; background-color:white;\">\n";
+        }
+        
+        for(var o = 1 ; o < out.length ; o++){
+            output += out[o];
+        }
+        for(var q = 1 ; q < out.length ; q++){
+            output += scrip[q];
+        }
+        
+        output += "</div>";
+        //output += scripts;
+////////////////////////////////////////////////////////////////////////////
+//If Live is checked
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b5").checked == true) {
+    styles = "\n<style>\n#title{\nposition: absolute;\nheight: 10%;\nwidth: 100%;\ntop: 0;\nleft: 0;\n}\n#title0{\nposition: absolute;\nheight: 8%;\nwidth: calc(100vh/1.8);\ntop: 0;\nleft: calc((100vw - (100vh/1.8))/2);\n}\n#title2{\nposition: absolute;\nwidth: 40%;\nheight: 5%;\ntop: 0;\nleft: 30%;\ntext-align: center;\nfont-family: \"Arial\";\ntext-transform: uppercase;\nfont-size: 3.5vmin;\nfont-weight: bold;\n}\n#box{\nposition:absolute;\nwidth: calc(8/4*(40vh));\nheight: 50%;\ntop: 10%;\nleft: 0;\nright: 0;\nmax-width: 100vw;\nmargin-left: auto;\nmargin-right: auto;\nborder: none;\n}\n#box3{\nposition:absolute;\nwidth: 42%;\nheight: 30%;\nbottom: 4.5%;\nleft: 29%;\nborder-style: groove;\n}\n#box2{\ndisplay:none;\n}\n</style>";
+}
+////////////////////////////////////////////////////////////////////////////
+//If Archive is checked
+////////////////////////////////////////////////////////////////////////////
+if (document.getElementById("b6").checked == true) {
+    styles = "\n<style>\n#title{\nposition: absolute;\nheight: 10%;\nwidth: 100%;\ntop: 0;\nleft: 0;\n}\n#title0{\nposition: absolute;\nheight: 8%;\nwidth: calc(100vh/1.8);\ntop: 0;\nleft: calc((100vw - (100vh/1.8))/2);\n}\n#title2{\nposition: absolute;\nwidth: 40%;\nheight: 5%;\ntop: 0;\nleft: 30%;\ntext-align: center;\nfont-family: \"Arial\";\ntext-transform: uppercase;\nfont-size: 3.5vmin;\nfont-weight: bold;\n}\n#box{\nposition:absolute;\nwidth: calc(7/4*(40vh));\nheight: 40%;\ntop: 10%;\nleft: 0;\nright: 0;\nmax-width: 100vw;\nmargin-left: auto;\nmargin-right: auto;\nborder: none;\n}\n#box2{\nposition:absolute;\nwidth: 43%;\nheight: 40%;\nbottom: 4.5%;\nleft: 5%;\nborder-style: groove;\n}\n#box3{\nposition:absolute;\nwidth: 43%;\nheight: 40%;\nbottom: 5%;\nright: 5%;\nborder: none;\n}\n</style>";
+}
+
+document.getElementById("myTextarea1").value = video + output + styles + "</body>";
+
+output = "";
+link = "";
+video = "";
+time = "";
+formatTime = 1;
+theRest = "";
+}
+
+////////////////////////////////////////////////////////////////////////////
+//READ FUNCTION
+//This function counts how many lines there are in the main text area.
+////////////////////////////////////////////////////////////////////////////
+function read(){
+    var fixDash = document.getElementById("myTextarea0").innerText;
+    fixDash = fixDash.replace(/–/g,"&#8211;");
+    document.getElementById("myTextarea0").innerText = fixDash;
+    
+    var numLines = null;
+    var option = null;
+    var num = null;
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var countLines = myTextarea0.value.split('\n');
+    }
+    else{
+        var countLines = myTextarea0.innerText.split('\n');
+    }
+    for(var m = 1 ; m < countLines.length ; m++){
+        numLines ++;
+    }
+    num = document.getElementById("pick");
+    num.length = 0;
+    for(var k = 1 ; k <= numLines ; k++){
+        option = document.createElement("option");
+        option.text = option.value = k;
+        num.add(option, k);
+    }
+}
+</script>
+
+<script>
+////////////////////////////////////////////////////////////////////////////
+//SELECT FUNCTION
+//This function highlights the selected line in the main text area.
+////////////////////////////////////////////////////////////////////////////
+function select(){
+    if(selectedValue == "1.0" || selectedValue == "1.1"){
+        var index = 0;
+        var line = myTextarea0.value.split('\n');
+        for(var j = 0 ; j < line.length ; j++){
+            if(document.getElementById("pick").value == j+1){
+                    //myTextarea0.setSelectionRange(place, place+line[j].length);
+                    myTextarea0.selectionStart = index;
+                    myTextarea0.selectionEnd = index + line[j].length;
+                }
+                index += line[j].length + 1;
+            }
+        }
+    }
+</script>
+
+<script>
+////////////////////////////////////////////////////////////////////////////
+//SHOW FUNCTION
+//This function previews the results in an iframe.
+////////////////////////////////////////////////////////////////////////////
+function show(){
+    var doc = document.getElementById("myTextarea3").contentWindow.document;
+    doc.open();
+    doc.write(document.getElementById("myTextarea1").value);
+    doc.close();
+}
+</script>
+
+<script>
+////////////////////////////////////////////////////////////////////////////
+//RESET FUNCTION
+//This function simply clears the iframe.
+////////////////////////////////////////////////////////////////////////////
+function resetWin(){
+    var elem = document.getElementById('myTextarea3');
+    elem.parentNode.removeChild(elem);
+    document.getElementById("frame").innerHTML = "<table id=\"frame\" align=\"center\" style=\"width:75% ; height:550\"><tr><td><iframe id=\"myTextarea3\" height=\"100%\" width=\"100%\"></iframe></td><td><button type=\"button\" onclick=\"resetWin()\">Reset</button></td></tr></table>";
+}
+</script>
+
+
+</body>
+</html>
+
